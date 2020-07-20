@@ -1,6 +1,52 @@
+# How to setup the root project.
+
+So firstly lets head over to the root `build.gradle` in there we will want to add a few specific things.
+
+```kotlin
+import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
+import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
+
+plugins {
+    kotlin("jvm") version "1.3.72"
+    id("com.github.johnrengelman.shadow") version "5.2.0"
+}
+
+group = "com.example"
+version = "1.0.0"
+
+allprojects {
+    apply<KotlinPluginWrapper>()
+    apply<ShadowPlugin>()
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    tasks {
+        shadowJar {
+            configurations = listOf(project.configurations["shadow"])
+            destinationDirectory.set(rootProject.file("./Server/plugins"))
+        }
+
+        compileKotlin {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+
+        compileTestKotlin {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+    }
+}
+```
+Now the `destinationDirectory.set(rootProject.file("./Server/plugins"))` is just saying where the compiled jars will be sent to.
+<br>
+<br>
+If you are familiar at all with gradle this will look very familiar to what you are used to already.
+
 # How to set up a new module
 
-To setup a new module first right click the root project and click the new module
+To set up a new module first right click the root project and click the new module
 ![](git-cache/h7PqQcjUIX.png)<br>
 
 After creating a new module, the basics are easy. Once the module has initialised and gradle has run it will throw errors thats fine. We're going to be focusing on **build.gradle** 
