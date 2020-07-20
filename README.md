@@ -92,8 +92,7 @@ Completely ignore any modules you have, this is not how you shade nor do you nee
 
 # After compiling
 
-After you have run shadowJar and the jars have compiled they will be located under `$rootProject/jars/...`
-<br>
+After you have run shadowJar and the jars have compiled they will be located under the location where you sent them to `destinationDirectory.set(rootProject.file("./Server/plugins"))`
 <br>
 Remember you will only need the module jars NOT `ROOT_PROJECT.jar` this jar is empty and does nothing. It is a useless jar.
 <br>
